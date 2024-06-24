@@ -1,0 +1,2 @@
+Training loss: 0.009248855523765087
+Validation loss: 0.13496287167072296
