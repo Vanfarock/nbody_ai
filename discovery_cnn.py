@@ -2,8 +2,8 @@ import tensorflow as tf
 
 
 class NBodyCNNModel(tf.keras.Model):
-    def __init__(self):
-        super(NBodyCNNModel, self).__init__()
+    def __init__(self, **kwargs):
+        super(NBodyCNNModel, self).__init__(**kwargs)
         self.num_filters = 32
         self.kernel_size = 3
         self.num_layers = 2

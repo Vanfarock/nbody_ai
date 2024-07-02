@@ -15,10 +15,9 @@ import random
 import time
 
 import numpy as np
-from matplotlib import pyplot as plt
-
 from ann import train_ann_model
 from cnn import train_cnn_model
+from matplotlib import pyplot as plt
 from rnn import train_rnn_model
 
 
@@ -171,62 +170,63 @@ def save_training_time(seconds, filename):
         file.write(str(seconds))
 
 
-infinity = load_infinity()
-states, forces = load_dataset()
-tensor = convert_states_to_tensor(states)
-X = tensor
-y = forces
+if __name__ == "__main__":
+    infinity = load_infinity()
+    states, forces = load_dataset()
+    tensor = convert_states_to_tensor(states)
+    X = tensor
+    y = forces
 
-epochs = 2_000
-evaluation_steps = 300
+    epochs = 2_000
+    evaluation_steps = 300
 
-start_time = time.time()
-model, training = train_ann_model(X, y, epochs)
-end_time = time.time()
-save_loss(
-    training.history["loss"][-1],
-    training.history["val_loss"][-1],
-    "loss/ann_loss.txt",
-)
-save_image(
-    training.history["loss"],
-    training.history["val_loss"],
-    "loss/ann.png",
-    "ANN",
-)
-save_training_time(end_time - start_time, "time/ann.txt")
-evaluate(model, infinity[0], evaluation_steps, 0.1, "output/ann_infinity.json")
+    start_time = time.time()
+    model, training = train_ann_model(X, y, epochs)
+    end_time = time.time()
+    save_loss(
+        training.history["loss"][-1],
+        training.history["val_loss"][-1],
+        "loss/ann_loss.txt",
+    )
+    save_image(
+        training.history["loss"],
+        training.history["val_loss"],
+        "loss/ann.png",
+        "ANN",
+    )
+    save_training_time(end_time - start_time, "time/ann.txt")
+    evaluate(model, infinity[0], evaluation_steps, 0.1, "output/ann_infinity.json")
 
-start_time = time.time()
-model, training = train_rnn_model(X, y, epochs)
-end_time = time.time()
-save_loss(
-    training.history["loss"][-1],
-    training.history["val_loss"][-1],
-    "loss/rnn_loss.txt",
-)
-save_image(
-    training.history["loss"],
-    training.history["val_loss"],
-    "loss/rnn.png",
-    "RNN",
-)
-save_training_time(end_time - start_time, "time/rnn.txt")
-evaluate(model, infinity[0], evaluation_steps, 0.1, "output/rnn_infinity.json")
+    start_time = time.time()
+    model, training = train_rnn_model(X, y, epochs)
+    end_time = time.time()
+    save_loss(
+        training.history["loss"][-1],
+        training.history["val_loss"][-1],
+        "loss/rnn_loss.txt",
+    )
+    save_image(
+        training.history["loss"],
+        training.history["val_loss"],
+        "loss/rnn.png",
+        "RNN",
+    )
+    save_training_time(end_time - start_time, "time/rnn.txt")
+    evaluate(model, infinity[0], evaluation_steps, 0.1, "output/rnn_infinity.json")
 
-start_time = time.time()
-model, training = train_cnn_model(X, y, epochs)
-end_time = time.time()
-save_loss(
-    training.history["loss"][-1],
-    training.history["val_loss"][-1],
-    "loss/cnn_loss.txt",
-)
-save_image(
-    training.history["loss"],
-    training.history["val_loss"],
-    "loss/cnn.png",
-    "CNN",
-)
-save_training_time(end_time - start_time, "time/cnn.txt")
-evaluate(model, infinity[0], evaluation_steps, 0.1, "output/cnn_infinity.json")
+    start_time = time.time()
+    model, training = train_cnn_model(X, y, epochs)
+    end_time = time.time()
+    save_loss(
+        training.history["loss"][-1],
+        training.history["val_loss"][-1],
+        "loss/cnn_loss.txt",
+    )
+    save_image(
+        training.history["loss"],
+        training.history["val_loss"],
+        "loss/cnn.png",
+        "CNN",
+    )
+    save_training_time(end_time - start_time, "time/cnn.txt")
+    evaluate(model, infinity[0], evaluation_steps, 0.1, "output/cnn_infinity.json")
